@@ -1,4 +1,3 @@
 [run]
-source = .
+include = requests_jwt.py
 branch = 1
-omit = tests/*
