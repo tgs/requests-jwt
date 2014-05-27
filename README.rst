@@ -7,9 +7,8 @@ This package allows for HTTP authentication using `JSON Web Tokens
 .. image:: https://api.travis-ci.org/tgs/requests-jwt.svg
    :target: https://travis-ci.org/tgs/requests-jwt
 
-.. image:: https://coveralls.io/repos/tgs/requests-jwt.png
+.. image:: https://coveralls.io/repos/tgs/requests-jwt/badge.png
    :target: https://coveralls.io/r/tgs/requests-jwt
-
 
 Usage
 -----
@@ -22,7 +21,7 @@ Usage
     from requests_jwt import JWTAuth
 
     auth = JWTAuth('secretT0Ken')
-    requests.get("http://jwt_protected.com", auth=auth)
+    requests.get("http://jwt-protected.com", auth=auth)
 
 More documentation is available at `Read the Docs <http://requests-jwt.rtfd.org>`_.
 
