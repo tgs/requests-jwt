@@ -4,6 +4,9 @@ requests-jwt
 This package allows for HTTP authentication using `JSON Web Tokens
 <http://self-issued.info/docs/draft-ietf-oauth-json-web-token.html>`_.
 
+.. image:: https://api.travis-ci.org/tgs/requests-jwt.svg
+   :target: https://travis-ci.org/tgs/requests-jwt
+
 Usage
 -----
 
