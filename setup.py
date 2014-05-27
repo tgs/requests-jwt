@@ -6,7 +6,7 @@ from setuptools import setup
 setup(
     name='requests_jwt',
     version='0.1',
-    packages=[ 'requests_jwt' ],
+    modules=[ 'requests_jwt' ],
     install_requires=[ 'requests>=1.0.0', 'PyJWT' ],
     tests_require=['httpretty'],
     test_suite='tests.suite',
