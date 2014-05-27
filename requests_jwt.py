@@ -91,17 +91,24 @@ class JWTAuth(AuthBase):
 
         If `generator` is callable, then each time a request is made with
         this JWTAuth, the generator will be called with one argument:
-        a `PreparedRequest` object.  See this page for a list of the
+        a `PreparedRequest` object.  See `this page`_ for a list of the
         available properties:
-        http://docs.python-requests.org/en/latest/api/#requests.PreparedRequest
+
+        .. _`this page`: http://docs.python-requests.org/en/latest/api/#requests.PreparedRequest
 
         For instance, here is field that will have your JWT sign the path that
         it is requesting:
+
+        .. code::
 
             auth.add_field('path', lambda req: req.path_url)
 
         If `generator` is not callable, it will be included directly in the
         JWT payload.  It could be a string or a JSON-serializable object.
+
+        This module provides several payload fields ready to go:
+        :func:`payload_method`, :func:`payload_path`, and :func:`payload_body`.
+        :meth:`expire` is also a wrapper around ``add_field``.
         """
         self._generators[name] = generator
 
