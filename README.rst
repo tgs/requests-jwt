@@ -17,6 +17,8 @@ Usage
     auth = JWTAuth('secretT0Ken')
     requests.get("http://jwt_protected.com", auth=auth)
 
+More documentation is available at `Read the Docs <requests-jwt.rtfd.org>`_.
+
 Installation
 ------------
 

@@ -6,11 +6,42 @@ import time
 import jwt
 
 
+__all__ = [
+        'JWTAuth',
+        'payload_method',
+        'payload_path',
+        'payload_body',
+        ]
+
+
 payload_method = lambda req: req.method
+"""
+A generator that will include the request method in the JWT payload.
+
+>>> auth = JWTAuth('secret')
+>>> auth.add_field('method', payload_method)
+"""
+
+
 payload_path = lambda req: req.path_url
+"""
+A generator that will include the request's path ('/blah/index.html') in the
+JWT payload.
+
+>>> auth = JWTAuth('secret')
+>>> auth.add_field('path', payload_path)
+"""
 
 
 def payload_body(req):
+    """
+    A generator that will include the sha256 signature of the request's body 
+    in the JWT payload.  This is only done if the request could have a body:
+    if the method is POST or PUT.
+
+    >>> auth = JWTAuth('secret')
+    >>> auth.add_field('body', payload_body)
+    """
     if req.method in ('POST', 'PUT'):
         #import pdb; pdb.set_trace()
         return {
@@ -26,19 +57,24 @@ class JWTAuth(AuthBase):
 
     The basic usage is this:
 
+    .. code::
+
         auth = JWTAuth(secret)
+        # Maybe add more fields to the payload (see below)
         resp = requests.get('http://example.com/', auth=auth)
 
-    You can add fields to the signed payload using the expire() and add_field() methods.
+    You can add fields to the signed payload using the :meth:`expire` and
+    :meth:`add_field` methods.
 
     This is a 'Custom Authentication' mechanism for Kenneth Reitz's Requests
-    library; see the example in the docs for some context:
-    http://docs.python-requests.org/en/latest/user/advanced/#custom-authentication
+    library; see the `example in the docs
+    <http://docs.python-requests.org/en/latest/user/advanced/#custom-authentication>`_
+    for some context.
 
-    For more on JSON Web Tokens, see
-    http://self-issued.info/docs/draft-ietf-oauth-json-web-token.html
+    For more on JSON Web Tokens, see `the standard
+    <http://self-issued.info/docs/draft-ietf-oauth-json-web-token.html>`_.
 
-    See the documentation of `PyJWT` for the list of available
+    See the documentation of :mod:`PyJWT` for the list of available
     algorithms.
     """
     def __init__(self, secret, alg='HS256'):
