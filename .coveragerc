@@ -1,0 +1,4 @@
+[run]
+source = .
+branch = 1
+omit = tests/*
