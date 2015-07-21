@@ -79,7 +79,7 @@ class BKAPITest(unittest.TestCase):
 
         auth = JWTAuth(secret)
         auth.add_field('path', requests_jwt.payload_path)
-        auth.set_header('Bearer: "%s"')
+        auth.set_header_format('Bearer: "%s"')
 
         resp = requests.get('http://example.com/',
                 params={'Hope this': 'Is signed'},
