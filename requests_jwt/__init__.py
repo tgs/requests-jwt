@@ -77,9 +77,10 @@ class JWTAuth(AuthBase):
     See the documentation of :mod:`PyJWT` for the list of available
     algorithms.
     """
-    def __init__(self, secret, alg='HS256'):
+    def __init__(self, secret, alg='HS256', authorization_header='JWT token="%s"'):
         self.secret = secret
         self.alg = alg
+        self._authHeader = authorization_header
         self._generators = {}
 
     def add_field(self, name, generator):
@@ -125,6 +126,12 @@ class JWTAuth(AuthBase):
         self.add_field('exp',
                 lambda req: int(time.time() + secs))
 
+    def set_header(self, authorization_header='JWT token="%s"'):
+        """
+        Modify authorization header from default 'JWT token="%s"'.
+        """
+        self._authHeader = authorization_header
+
     def _generate(self, request):
         """
         Generate a payload for the given request.
@@ -154,5 +161,5 @@ class JWTAuth(AuthBase):
         #import pdb; pdb.set_trace()
         token = jwt.encode(payload, self.secret, self.alg)
     
-        request.headers['Authorization'] = 'JWT token="%s"' % token.decode('ascii')
+        request.headers['Authorization'] = self._authHeader % token.decode('ascii')
         return request
