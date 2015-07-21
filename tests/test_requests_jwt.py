@@ -70,3 +70,22 @@ class BKAPITest(unittest.TestCase):
         claim = jwt.decode(token, secret)
 
         self.assertEqual(claim['path'], '/?Hope+this=Is+signed')
+
+    @httpretty.activate
+    def test_custom_header_text(self):
+        httpretty.register_uri(httpretty.GET, 'http://example.com/',
+                body='[]')
+        secret = 's33333krit'
+
+        auth = JWTAuth(secret)
+        auth.add_field('path', requests_jwt.payload_path)
+        auth.set_header('Bearer: "%s"')
+
+        resp = requests.get('http://example.com/',
+                params={'Hope this': 'Is signed'},
+                auth=auth)
+
+        req = httpretty.last_request()
+        auth_hdr = req.headers['Authorization']
+
+        self.assertTrue(auth_hdr.startswith('Bearer: "'))
