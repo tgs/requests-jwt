@@ -1,6 +1,8 @@
 requests-jwt
 =============
 
+*This package is not actively maintained and has never had a security audit.*
+
 This package allows for HTTP authentication using `JSON Web Tokens
 <http://self-issued.info/docs/draft-ietf-oauth-json-web-token.html>`_.
 
