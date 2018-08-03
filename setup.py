@@ -7,7 +7,7 @@ setup(
     name='requests-jwt',
     version='0.4',
     url='https://github.com/tgs/requests-jwt',
-    packages=['requests_jwt'],
+    modules=['requests_jwt'],
     install_requires=[ 'requests', 'PyJWT' ],
     tests_require=['httpretty'],
     test_suite='tests.suite',
