@@ -35,17 +35,18 @@ JWT payload.
 
 def payload_body(req):
     """
-    A generator that will include the sha256 signature of the request's body 
+    A generator that will include the sha256 signature of the request's body
     in the JWT payload.  This is only done if the request could have a body:
     if the method is POST or PUT.
 
     >>> auth = JWTAuth('secret')
     >>> auth.add_field('body', payload_body)
     """
+    to_hash = req.body if type(req.body) is bytes else req.body.encode('utf-8')
+
     if req.method in ('POST', 'PUT'):
-        #import pdb; pdb.set_trace()
         return {
-                'hash': hashlib.sha256(req.body.encode('utf-8')).hexdigest(),
+                'hash': hashlib.sha256(to_hash).hexdigest(),
                 'alg': 'sha256',
                 }
 

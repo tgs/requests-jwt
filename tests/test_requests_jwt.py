@@ -89,3 +89,24 @@ class BKAPITest(unittest.TestCase):
         auth_hdr = req.headers['Authorization']
 
         self.assertTrue(auth_hdr.startswith('Bearer: "'))
+
+    @httpretty.activate
+    def test_json_post_body(self):
+        httpretty.register_uri(httpretty.POST, 'http://example.com/',
+                body='[]')
+        secret = 's33333krit'
+
+        auth = JWTAuth(secret)
+        auth.add_field('body', requests_jwt.payload_body)
+        resp = requests.post(
+            'http://example.com/',
+            json={'some': 'data'},
+            auth=auth)
+
+        req = httpretty.last_request()
+        auth_hdr = req.headers['Authorization']
+        token = auth_hdr[auth_hdr.find('"'):].strip('"')
+        claim = jwt.decode(token, secret)
+
+        self.assertEqual(claim['body']['hash'],
+                hashlib.sha256(req.body).hexdigest())
