@@ -5,7 +5,7 @@ from setuptools import setup
 
 setup(
     name='requests-jwt',
-    version='0.4',
+    version='0.5',
     url='https://github.com/tgs/requests-jwt',
     modules=['requests_jwt'],
     install_requires=[ 'requests', 'PyJWT' ],
