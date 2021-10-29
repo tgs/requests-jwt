@@ -162,6 +162,8 @@ class JWTAuth(AuthBase):
         payload = self._generate(request)
         #import pdb; pdb.set_trace()
         token = jwt.encode(payload, self.secret, self.alg)
-    
-        request.headers['Authorization'] = self._header_format % token.decode('ascii')
+        
+        # jwt.encode() -> str in pyJWT>=2, vs bytes in pyJWT<2
+        token_str = token.decode('ascii') if isinstance(token, bytes) elses token
+        request.headers['Authorization'] = self._header_format % token_str
         return request
