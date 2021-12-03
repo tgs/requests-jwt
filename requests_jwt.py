@@ -164,6 +164,6 @@ class JWTAuth(AuthBase):
         token = jwt.encode(payload, self.secret, self.alg)
         
         # jwt.encode() -> str in pyJWT>=2, vs bytes in pyJWT<2
-        token_str = token.decode('ascii') if isinstance(token, bytes) elses token
+        token_str = token.decode('ascii') if isinstance(token, bytes) else token
         request.headers['Authorization'] = self._header_format % token_str
         return request
