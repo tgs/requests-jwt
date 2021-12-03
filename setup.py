@@ -9,7 +9,6 @@ setup(
     url='https://github.com/tgs/requests-jwt',
     py_modules=['requests_jwt'],
     install_requires=[ 'requests', 'PyJWT' ],
-    tests_require=['httpretty'],
     test_suite='tests.suite',
     provides=[ 'requests_jwt' ],
     author='Thomas Grenfell Smith',
