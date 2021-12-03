@@ -29,7 +29,7 @@ class BKAPITest(unittest.TestCase):
         self.assertTrue('JWT token=' in auth_hdr)
         token = auth_hdr[auth_hdr.find('"'):].strip('"')
         # Throws an exception on failure to verify
-        claim = jwt.decode(token, secret)
+        claim = jwt.decode(token, secret, algorithms=['HS256'])
 
     @httpretty.activate
     def test_body(self):
@@ -46,7 +46,7 @@ class BKAPITest(unittest.TestCase):
         req = httpretty.last_request()
         auth_hdr = req.headers['Authorization']
         token = auth_hdr[auth_hdr.find('"'):].strip('"')
-        claim = jwt.decode(token, secret)
+        claim = jwt.decode(token, secret, algorithms=['HS256'])
 
         self.assertEqual(claim['body']['hash'],
                 hashlib.sha256(req.body).hexdigest())
@@ -67,7 +67,7 @@ class BKAPITest(unittest.TestCase):
         req = httpretty.last_request()
         auth_hdr = req.headers['Authorization']
         token = auth_hdr[auth_hdr.find('"'):].strip('"')
-        claim = jwt.decode(token, secret)
+        claim = jwt.decode(token, secret, algorithms=['HS256'])
 
         self.assertEqual(claim['path'], '/?Hope+this=Is+signed')
 
@@ -106,7 +106,7 @@ class BKAPITest(unittest.TestCase):
         req = httpretty.last_request()
         auth_hdr = req.headers['Authorization']
         token = auth_hdr[auth_hdr.find('"'):].strip('"')
-        claim = jwt.decode(token, secret)
+        claim = jwt.decode(token, secret, algorithms=['HS256'])
 
         self.assertEqual(claim['body']['hash'],
                 hashlib.sha256(req.body).hexdigest())
